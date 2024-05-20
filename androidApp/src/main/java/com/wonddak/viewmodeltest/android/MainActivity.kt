@@ -16,8 +16,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.wonddak.viewmodeltest.BaseViewModel
 import com.wonddak.viewmodeltest.Greeting
-import com.wonddak.viewmodeltest.MainViewModel
+
+class MainViewModel : BaseViewModel()
 
 class MainActivity : ComponentActivity() {
     private val mainViewModel : MainViewModel by viewModels()

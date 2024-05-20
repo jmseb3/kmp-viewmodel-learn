@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+open class BaseViewModel : ViewModel() {
 
     private var _showSplash = MutableStateFlow(true)
 

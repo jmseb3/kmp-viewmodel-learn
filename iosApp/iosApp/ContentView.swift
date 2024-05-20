@@ -1,15 +1,33 @@
 import SwiftUI
 import shared
 
+class MainViewModel : ObservableObject {
+    private let base : BaseViewModel = BaseViewModel()
+    
+    @Published var showSplash :Bool = true
+    
+    init() {
+        base.showSplash.collect(
+            collector: Collector<Bool> { value in
+                self.showSplash = value
+            }
+        ) { error in
+        }
+    }
+    
+    func hideSplash(withDelay: Int64) {
+        base.hideSplash(withDelay: withDelay)
+    }
+}
+
 struct ContentView: View {
     let greet = Greeting().greet()
-    let mainViewModel : MainViewModel = MainViewModel()
+    @StateObject var mainViewModel : MainViewModel = MainViewModel()
     
-    @State private var showSplash :Bool = true
     var body: some View {
         ZStack {
             Text(greet)
-            if(showSplash) {
+            if(mainViewModel.showSplash) {
                 VStack{
                     Text("허접한 스플래쉬")
                         .frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .center)
@@ -17,25 +35,10 @@ struct ContentView: View {
                 .frame(maxWidth: .infinity,maxHeight: .infinity)
                 .background(.white)
                 .onAppear{
-                    mainViewModel.hideSplash(withDelay: Int64(4000))
+                    mainViewModel.hideSplash(withDelay: 4000)
                 }
             }
         }
-        .onAppear{
-            mainViewModel.showSplash.collect(
-                collector: Collector<Bool> { value in
-                    showSplash = value
-                }
-            ) { error in
-                
-            }
-        }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
 
